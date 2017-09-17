@@ -6,4 +6,7 @@
     <string name="Male">ชาย</string>
     <string name="Female">หญิง</string>
     <string name="Province">จังหวัด</string>
+    <string name="titleProvince">โปรดเลือกจังหวัด</string>
+    <string name="strProvince">โปรดเลือกจังหวัด 1 จังหวัด</string>
+
 </resources>

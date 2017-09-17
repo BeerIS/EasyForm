@@ -43,15 +43,18 @@
         android:textSize="@dimen/h2"/>
     <!--Gender-->
         <RadioGroup
+            android:id="@+id/rdgGender"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <RadioButton
+                android:id="@+id/rdoMale"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/Male"
                 android:textColor="@color/colorPrimaryDark"/>
             <RadioButton
+                android:id="@+id/rdoFemale"
                 android:layout_marginLeft="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -66,18 +69,23 @@
         android:text="@string/Province"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="@dimen/h2"/>
+
     <Spinner
+        android:id="@+id/spnProvince"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/padding">
 
     </Spinner>
+
     <Button
+        android:id="@+id/btnAdd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="#FFFFFF"
         android:background="@color/colorPrimary"
         android:text="Add Data"/>
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
