@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">EasyForm</string>
     <string name="frmName">แบบสอบถาม</string>
+    <string name="name">ชื่อ นามสกุล</string>
+    <string name="Gender">เพศ</string>
+    <string name="Male">ชาย</string>
+    <string name="Female">หญิง</string>
+    <string name="Province">จังหวัด</string>
 </resources>
