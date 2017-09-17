@@ -1,9 +1,13 @@
 package app.security.egat.easyform.fragment;
 
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +15,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import app.security.egat.easyform.R;
+import app.security.egat.easyform.sqlite.MyManager;
+import app.security.egat.easyform.sqlite.MyOpenHelper;
 import app.security.egat.easyform.utility.MyAlertDialog;
 
 /**
@@ -53,6 +60,8 @@ public class MainFragment extends Fragment{
 
         //Spinner Controller
         spinnerController();
+
+        CreateListView();
 
     }
 
@@ -115,14 +124,54 @@ public class MainFragment extends Fragment{
                     //Gender is not selected
                     MyAlertDialog alertDialog = new MyAlertDialog(getActivity());
                     alertDialog.myDialog("Gender Required","Please select a gender, male or female");
-                }
-                else if (indexAnInt==0) {
+                } else if (indexAnInt == 0) {
                     //Province is not selected
                     MyAlertDialog alertDialog = new MyAlertDialog(getActivity());
                     alertDialog.myDialog(getResources().getString(R.string.titleProvince),
                             getResources().getString(R.string.strProvince));
                 }
+                else {
+                    MyManager myManager = new MyManager(getActivity());
+                    myManager.AddNameToSQLite(nameString,
+                            genderString,
+                            provinceStrings[indexAnInt]);
+                    //Create ListView
+                    CreateListView();
+                }//if
             }
         });
     }
+    private void CreateListView() {
+        try {
+            SQLiteDatabase sqLiteDatabase = getActivity().openOrCreateDatabase(
+                    MyOpenHelper.databaseName,
+                    Context.MODE_PRIVATE,
+                    null
+            );
+            Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM member", null);
+            cursor.moveToFirst();
+            String[] nameStrings  = new String[cursor.getCount()];
+            String[] genderStrings = new String[cursor.getCount()];
+            String[] provinceStrings = new String[cursor.getCount()];
+            for (int i=0; i<cursor.getCount();i++)
+            {
+                nameStrings[i]=cursor.getString(1);
+                genderStrings[i]=cursor.getString(2);
+                provinceStrings[i]=cursor.getString(3);
+                Log.d("Sep1717", "Name[" + i + "]==>"+ nameStrings[i]);
+                cursor.moveToNext();
+            }
+            ListView listView = (ListView) getView().findViewById(R.id.lstName);
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                    getActivity(),
+                    android.R.layout.simple_list_item_1,
+                    nameStrings
+            );
+            listView.setAdapter(arrayAdapter);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
